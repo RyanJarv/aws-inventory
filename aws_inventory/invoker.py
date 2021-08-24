@@ -1,15 +1,15 @@
 """Abstraction for invoking AWS APIs (a.k.a. operations) and handling responses."""
 
 import logging
-from Queue import Queue
+from queue import Queue
 from threading import Thread
 
 import botocore
 from opinel.utils.credentials import read_creds
 
-import config
-import progress
-import store
+from . import config
+from . import progress
+from . import store
 
 
 LOGGER = logging.getLogger(__name__)
@@ -122,7 +122,7 @@ class ApiInvoker(object):
                     self.store.dump_exception_store(out_fp)
 
             if self.script_args.verbose:
-                print self.store.get_response_store()
+                print(self.store.get_response_store())
 
             if gui_data_fp:
                 self.store.generate_data_file(gui_data_fp)

@@ -119,7 +119,7 @@ def filter_services(api_model, services=frozenset(), excluded_services=frozenset
     :rtype: frozenset
     :return: the list of merged services
     """
-    available = frozenset(list(api_model.keys()))
+    available = frozenset(api_model.keys())
     if services:
         invalid = services - available
         if invalid:
@@ -243,13 +243,13 @@ def main(args):
     setup_logging(args.debug)
 
     if args.version:
-        print(aws_inventory.__version__)
+        print aws_inventory.__version__
         return
 
     api_model = build_api_model()
 
     if args.list_svcs:
-        print('\n'.join(sorted(filter_services(api_model))))
+        print '\n'.join(sorted(filter_services(api_model)))
         return
 
     # configure the debug level for opinel
@@ -257,7 +257,7 @@ def main(args):
 
     # validate services against API mode #
 
-    available_services = list(api_model.keys())
+    available_services = api_model.keys()
 
     if args.services:
         invalid_included_services = [svc for svc in args.services if svc not in available_services]
@@ -305,13 +305,13 @@ def main(args):
             len(service_descriptors[svc_name]['regions'])
         )
         if args.list_operations:
-            print('[{}]\n{}\n'.format(
+            print '[{}]\n{}\n'.format(
                 svc_name,
                 '\n'.join(service_descriptors[svc_name]['ops']) or '# NONE'
-            ))
+            )
 
     if args.list_operations:
-        print('Total operations to invoke: {}'.format(ops_count))
+        print 'Total operations to invoke: {}'.format(ops_count)
     else:
         LOGGER.debug('Total operations to invoke: %d.', ops_count)
         aws_inventory.invoker.ApiInvoker(args, service_descriptors, ops_count).start()
